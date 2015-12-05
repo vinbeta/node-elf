@@ -13,8 +13,16 @@ app.get('/',function(req,res){
 	res.render('home');
 });
 
+var fortunes = [
+	"Conquer your fears or they will conquer you.",
+	"Do not fear what you don't know.",
+	"Rivers ndeed springs.",
+	"You will have a pleasant surprise.",
+	"Whenever possible, keep it simple."
+];
 app.get('/about',function(req,res){
-	res.render('about');
+	var randomeFortune = fortunes[Math.floor(Math.random()*fortunes.length)];
+	res.render('about',{fortune:randomeFortune});
 });
 
 // for 404 page
@@ -29,6 +37,8 @@ app.use(function(err,req,res,next){
 	res.status(500);
 	res.render('500');
 });
+
+app.use(express.static(__dirname+'/public'));
 
 app.listen(app.get('port'),function(){
 	console.log('Express started on http://192.168.0.72:' + app.get('port') + '; press Ctrl-C to terminate.');
